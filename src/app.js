@@ -21,7 +21,7 @@ const allowedOrigins = [
   process.env.PRODUCTION_FRONTEND_URL,
 ];
 
-await connectDB();
+// await connectDB();
 
 app.use(
   cors({
@@ -57,4 +57,11 @@ app.put("/api/content/:sectionName", isAdmin, saveSection);
 // 'image' is the field name we will use in FormData on the frontend
 app.post("/api/upload", isAdmin, upload.single("image"), uploadImage);
 
+const PORT = process.env.PORT || 5000;
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
 export default app;
